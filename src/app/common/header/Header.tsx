@@ -44,6 +44,7 @@ const Header: React.FC<IProps> = ({ title, action }) => {
         variant="contained"
         color="primary"
         startIcon={<AddIcon />}
+        onClick={action}
       >
         Добавить
       </Button>

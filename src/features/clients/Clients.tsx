@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../app/store/rootStore';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Header from '../../app/common/header/Header';
 // import ClientsFilter from './ClientsFilter';
 import ClientsTable from './ClientsTable';
+import ClientForm from './ClientForm';
+import MuiDialog from '../../app/common/dialog/Dialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,19 +22,27 @@ const useStyles = makeStyles((theme) => ({
 const Clients: React.FC = () => {
   const classes = useStyles();
   const rootStore = useContext(RootStoreContext);
-  const { getClients, page, pageLimit } = rootStore.clientsStore;
+  const { getClients } = rootStore.clientsStore;
+
+  const [formOpen, setFormOpen] = useState(true);
 
   useEffect(() => {
     getClients();
-  }, [getClients, page, pageLimit]);
+  }, [getClients]);
 
   return (
     <Fragment>
-      <Header title="Клиенты" action={() => {}} />
+      <Header title="Клиенты" action={() => setFormOpen(true)} />
       <div className={classes.root}>
         <Paper className={classes.content} variant="outlined">
           {/* <ClientsFilter /> */}
           <ClientsTable />
+          <MuiDialog
+            open={formOpen}
+            title={'Добавить клиента'}
+            content={<ClientForm />}
+            onClose={() => setFormOpen(false)}
+          />
         </Paper>
       </div>
     </Fragment>

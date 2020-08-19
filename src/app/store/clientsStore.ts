@@ -30,8 +30,12 @@ export default class ClientsStore {
         region: 'Регион',
         city: 'Город',
       },
-      body: (_.map(this.clients.slice(0, 10), (x) =>
-        _.pick(x, ['id', 'name', 'registered_name', 'region', 'city'])
+      body: (_.map(
+        this.clients.slice(
+          (this.page - 1) * this.pageLimit,
+          this.page * this.pageLimit
+        ),
+        (x) => _.pick(x, ['id', 'name', 'registered_name', 'region', 'city'])
       ) as unknown) as Dictionary<string>[],
       actions: {
         edit: (id) =>

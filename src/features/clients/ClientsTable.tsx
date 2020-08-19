@@ -21,7 +21,7 @@ const ClientsTable: React.FC = () => {
         count: totalCount,
         page,
         rowsPerPage: pageLimit,
-        handleChangePage: (e, p) => setPage(p),
+        handleChangePage: (e, p) => setPage(p + 1),
         handleChangeRowsPerPage: (e) => setPageLimit(parseInt(e.target.value)),
       }}
     />
